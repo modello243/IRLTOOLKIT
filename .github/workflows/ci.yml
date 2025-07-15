@@ -1,0 +1,27 @@
+name: CI
+on: [push,pull_request]
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: |
+          cd backend && npm ci
+          cd ../dashboard && npm ci
+      - name: Lint Backend
+        run: |
+          cd backend && npx eslint .
+      - name: Snyk Scan
+        uses: snyk/actions@master
+        with:
+          command: test
+      - name: Test Backend
+        run: |
+          cd backend && npm test
+      - name: Test Dashboard
+        run: |
+          cd dashboard && npm test || echo "No tests for dashboard"

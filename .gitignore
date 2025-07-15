@@ -1,0 +1,14 @@
+# Node modules
+**/node_modules/
+
+# React build
+dashboard/build/
+
+# Env files
+*.env
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
